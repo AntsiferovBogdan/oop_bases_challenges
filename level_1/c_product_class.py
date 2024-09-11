@@ -6,11 +6,31 @@
     2. Создайте экземпляр этого продукта и наполинте своими данными.
     3. Распечатайте о нем иформацию в таком виде: Информация о продукте: название, описание, цена, вес
 """
+# from dataclasses import dataclass
 
 
+# 1. Стандартное описание класса
 class Product:
-    pass  # код писать тут
+    def __init__(self, name: str, description: str, price: int, weight: int):
+        self.name = name
+        self.description = description
+        self.price = price
+        self.weight = weight
+
+# 2. С использованием декоратора
+# @dataclass
+# class Product:
+#     name: str
+#     description: str
+#     price: int
+#     weight: int
 
 
 if __name__ == '__main__':
-    pass  # код писать тут
+    new_product = Product(
+        'iPhone 16',
+        'Amazing and powerful',
+        799,
+        170,
+        )
+    print(f'Информация о продукте: {new_product.name}, {new_product.description}, {new_product.price}, {new_product.weight}')

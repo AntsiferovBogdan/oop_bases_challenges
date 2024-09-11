@@ -10,8 +10,28 @@
 
 
 class BankAccount:
-    pass  # код писать тут
+    def __init__(self, owner_full_name: str, balance: float):
+        self.owner_full_name = owner_full_name
+        self.balance = balance
+
+    def increase_balance(self, income: float):
+        if isinstance(income, (float, int)) and income > 0:
+            self.balance += income
+        else:
+            raise ValueError('Incorrect income value')
+
+    def decrease_balance(self, outcome: float):
+        if isinstance(outcome, (float, int)) and outcome <= self.balance:
+            self.balance -= outcome
+        else:
+            raise ValueError('Insufficient funds on balance')
 
 
 if __name__ == '__main__':
-    pass  # код писать тут
+    account = BankAccount(
+        'John Doe',
+        100.0,
+    )
+    account.decrease_balance(20.0)
+    print(account.balance)
+    account.decrease_balance(100.0)
