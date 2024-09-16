@@ -15,7 +15,7 @@ class BankAccount:
         self.balance = balance
 
     def increase_balance(self, income: float):
-        if type(income) in (float, int) and income > 0:
+        if income > 0:
             self.balance += income
         else:
             raise ValueError('Incorrect income value')
