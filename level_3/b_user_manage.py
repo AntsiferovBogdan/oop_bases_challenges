@@ -9,22 +9,57 @@
        У него должен быть свой уникальный метод ban_all_users, который будет удалять все юзернэймы из списка.
     3. Создайте экземпляры каждого из трех классов и у каждого экземпляра вызовите все возможные методы.
 """
+from dataclasses import dataclass, field
 
 
+@dataclass(kw_only=True, slots=True)
 class UserManager:
-    def __init__(self):
-        self.usernames = []
+    usernames: list[str] = field(default_factory=list)
 
-    def add_user(self, username):
+    def add_user(self, username: str) -> None:
         self.usernames.append(username)
 
-    def get_users(self):
+    def get_users(self) -> list[str]:
         return self.usernames
 
 
-# код писать тут
+@dataclass()
+class AdminManager(UserManager):
+
+    def ban_username(self, username: str) -> None:
+        if username in self.usernames:
+            self.usernames.remove(username)
+        else:
+            print('Такого пользователя не существует.')
+
+
+@dataclass()
+class SuperAdminManager(AdminManager):
+
+    def ban_all_users(self) -> None:
+        self.usernames.clear()
 
 
 if __name__ == '__main__':
-    pass  # код писать тут
+    new_manager = UserManager(usernames=['mr. manager'])
+    new_manager.add_user('good boy')
+    new_manager.add_user('bad guy')
+    print(new_manager.get_users())
 
+    new_admin = AdminManager(usernames=['mr. admin'])
+    new_admin.add_user('good boy')
+    new_admin.add_user('bad guy')
+    print(new_admin.get_users())
+    new_admin.ban_username('mr. manager')
+    new_admin.ban_username('good boy')
+    print(new_admin.get_users())
+
+    new_super_admin = SuperAdminManager(usernames=['mr. super_admin'])
+    new_super_admin.add_user('good boy')
+    new_super_admin.add_user('bad guy')
+    print(new_super_admin.get_users())
+    new_super_admin.ban_username('mr. manager')
+    new_super_admin.ban_username('good boy')
+    print(new_super_admin.get_users())
+    new_super_admin.ban_all_users()
+    print(new_super_admin.get_users())

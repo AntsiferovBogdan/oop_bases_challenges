@@ -7,21 +7,31 @@
        Например: Total text length: 67, total number of words in the text: 10
     3. Создайте экземпляры каждого из двух классов и у каждого экземпляра вызовите все возможные методы.
 """
+from dataclasses import dataclass
 
 
+@dataclass(frozen=True, kw_only=True, slots=True)
 class TextProcessor:
-    def __init__(self, text):
-        self.text = text
+    text: str
 
-    def to_upper(self):
+    def to_upper(self) -> str:
         return self.text.upper()
 
-    def summarize(self):
+    def summarize(self) -> str:
         return f'Total text length: {len(self.text)}'
 
 
-# код писать тут
+@dataclass(frozen=True)
+class AdvancedTextProcessor(TextProcessor):
+    def summarize(self) -> str:
+        return f'{super().summarize()}. Total number of words in the text: {len(self.text.split())}'
 
 
 if __name__ == '__main__':
-    pass  # код писать тут
+    processor = TextProcessor(text='This is Sparta')
+    print(processor.to_upper())
+    print(processor.summarize())
+
+    advenced_processor = AdvancedTextProcessor(text='This is Sparta')
+    print(advenced_processor.to_upper())
+    print(advenced_processor.summarize())
