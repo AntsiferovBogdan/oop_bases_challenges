@@ -9,12 +9,11 @@
        У него должен быть свой уникальный метод ban_all_users, который будет удалять все юзернэймы из списка.
     3. Создайте экземпляры каждого из трех классов и у каждого экземпляра вызовите все возможные методы.
 """
-from dataclasses import dataclass, field
 
 
-@dataclass(kw_only=True, slots=True)
 class UserManager:
-    usernames: list[str] = field(default_factory=list)
+    def __init__(self, usernames: list[str]):
+        self.usernames = usernames
 
     def add_user(self, username: str) -> None:
         self.usernames.append(username)
@@ -23,9 +22,7 @@ class UserManager:
         return self.usernames
 
 
-@dataclass()
 class AdminManager(UserManager):
-
     def ban_username(self, username: str) -> None:
         if username in self.usernames:
             self.usernames.remove(username)
@@ -33,9 +30,7 @@ class AdminManager(UserManager):
             print('Такого пользователя не существует.')
 
 
-@dataclass()
 class SuperAdminManager(AdminManager):
-
     def ban_all_users(self) -> None:
         self.usernames.clear()
 
