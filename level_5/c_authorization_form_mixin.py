@@ -1,6 +1,6 @@
 """
-У нас есть класс формы и метод для валидации в нем. Мы хотим создать форму для авторизации, где нам важно чтобы юзернэйм
-существовал в базе данных
+У нас есть класс формы и метод для валидации в нем.
+Мы хотим создать форму для авторизации, где нам важно чтобы юзернэйм существовал в базе данных
 
 Задания:
     1. Напишите логику метода valid_form в классе AuthorizationFormMixin таким образом, чтобы там была проверка и из
@@ -17,17 +17,20 @@ class Form:
         self.username = username
         self.password = password
 
-    def valid_form(self):
+    def valid_form(self) -> bool:
         return len(self.password) > 8
 
 
 class AuthorizationFormMixin:
-    def valid_form(self):
-        pass  # писать код тут
+    def valid_form(self) -> bool:
+        return super().valid_form() and self.username in USERNAMES_IN_DB
 
 
-# писать код тут
+class AuthorizationForm(AuthorizationFormMixin, Form):
+    def __init__(self, username: str, password: str):
+        super().__init__(username, password)
 
 
 if __name__ == '__main__':
-    pass  # писать код тут
+    form = AuthorizationForm('CrazyCoder', '123456789')
+    print(form.valid_form())

@@ -14,20 +14,35 @@ from datetime import datetime
 
 
 class Product:
-    def __init__(self, title, quantity):
+    def __init__(self, title: str, quantity: int | float):
         self.title = title
         self.quantity = quantity
 
-    def get_full_info(self):
+    def get_full_info(self) -> str:
         return f'Product {self.title}, {self.quantity} in stock.'
 
-    def is_available(self):
+    def is_available(self) -> bool:
         return self.quantity > 0
 
 
 class FoodProduct(Product):
-    pass  # код писать тут
+    def __init__(self, title: str, quantity: int | float, expiration_date: datetime):
+        super().__init__(title, quantity)
+        self.expiration_date = expiration_date
+
+    def get_full_info(self) -> str:
+        return f'''Product {self.title}, {self.quantity} in stock.
+Expiration date: {self.expiration_date.strftime('%d %B %Y %H:%M')}'''
+
+    def is_available(self) -> bool:
+        return super().is_available() and self.expiration_date > datetime.now()
 
 
 if __name__ == '__main__':
-    pass  # код писать тут
+    phone = Product('iPhone 16', 100)
+    print(phone.get_full_info())
+    print(phone.is_available())
+
+    banana = FoodProduct('Banana', 7.5, datetime(2024, 9, 22))
+    print(banana.get_full_info())
+    print(banana.is_available())

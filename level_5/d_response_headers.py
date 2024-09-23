@@ -10,18 +10,19 @@
        для этого
     3. Создайте экземпляр класса CustomResponse и вызовите у него метод generate_headers, все ли хэдэры теперь на месте.
 """
+from typing import Any
 
 
 class BaseResponse:
     def __init__(self, content: str):
         self.content = content
 
-    def get_byte_content_length(self):
+    def get_byte_content_length(self) -> int:
         return len(self.content.encode('utf-8'))
 
 
 class BaseHeadersMixin:
-    def generate_base_headers(self):
+    def generate_base_headers(self) -> dict[str, Any]:
         return {
             'Content-Type': 'application/x-www-form-urlencoded',
             'user-agent': (
@@ -30,11 +31,18 @@ class BaseHeadersMixin:
             ),
         }
 
-    def generate_headers(self):
+    def generate_headers(self) -> dict[str, Any]:
         return self.generate_base_headers()
 
 
-# код писать тут
+class CustomResponse(BaseResponse, BaseHeadersMixin):
+    def __init__(self, content: str):
+        super().__init__(content)
+
+    def generate_headers(self):
+        return super().generate_headers() | {'Content-Length': super().get_byte_content_length()}
+
 
 if __name__ == '__main__':
-    pass  # код писать тут
+    response = CustomResponse('hello from the earth')
+    print(response.generate_headers())
