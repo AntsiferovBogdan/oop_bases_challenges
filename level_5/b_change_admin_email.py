@@ -23,7 +23,7 @@ class AdminUserMixin:
         raise SystemError('It is impossible to change the email address of the administrator')
 
 
-class AdminUser(AdminUserMixin, User):
+class AdminUser(User, AdminUserMixin):
     def __init__(self, username: str, email: str):
         super().__init__(username, email)
 

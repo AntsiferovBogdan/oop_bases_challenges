@@ -27,18 +27,12 @@ class FileHandler:
 
 
 class JSONHandler(FileHandler):
-    def __init__(self, filename: str):
-        super().__init__(filename)
-
     def read(self) -> dict[str, Any]:
         with open(self.filename, 'r') as file:
             return json.load(file)
 
 
 class CSVHandler(FileHandler):
-    def __init__(self, filename: str):
-        super().__init__(filename)
-
     def read(self) -> list[dict[str, str]]:
         with open(self.filename, 'r') as file:
             return list(csv.DictReader(file))

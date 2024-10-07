@@ -35,7 +35,7 @@ class BaseHeadersMixin:
         return self.generate_base_headers()
 
 
-class CustomResponse(BaseResponse, BaseHeadersMixin):
+class CustomResponse(BaseHeadersMixin, BaseResponse):
     def __init__(self, content: str):
         super().__init__(content)
 

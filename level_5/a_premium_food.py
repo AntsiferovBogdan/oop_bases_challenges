@@ -25,7 +25,7 @@ class FoodProductMixin:
         return self.price > 10
 
 
-class FoodProduct(Product, FoodProductMixin):
+class FoodProduct(FoodProductMixin, Product):
     def __init__(self, title: str, price: float):
         super().__init__(title, price)
 
