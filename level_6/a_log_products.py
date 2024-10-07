@@ -27,7 +27,7 @@ class Product:
         return f'Product {self.title} with price {self.price}'
 
 
-class PremiumProduct(Product, PrintLoggerMixin):
+class PremiumProduct(PrintLoggerMixin, Product):
     def increase_price(self):
         self.log(f'{self.__class__.__name__}.{currentframe().f_code.co_name}')
         self.price *= 1.2
@@ -38,7 +38,7 @@ class PremiumProduct(Product, PrintLoggerMixin):
         return f'{base_info} (Premium)'
 
 
-class DiscountedProduct(Product, PrintLoggerMixin):
+class DiscountedProduct(PrintLoggerMixin, Product):
     def decrease_price(self) -> None:
         self.log(f'{self.__class__.__name__}.{currentframe().f_code.co_name}')
         self.price /= 1.2
