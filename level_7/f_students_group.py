@@ -1,5 +1,6 @@
 """
-У нас есть класс для работы с группами студентов, и нам хотелось бы иметь возможность суммировать все оценки от двух групп.
+У нас есть класс для работы с группами студентов,
+и нам хотелось бы иметь возможность суммировать все оценки от двух групп.
 Но сейчас мы почему-то не можем этого делать и получаем ошибку, нужно разобраться почему и дописать код класса.
 
 Задания:
@@ -14,6 +15,9 @@ class StudentGroup:
     def __init__(self, group_number: int, grades: list[int]):
         self.group_number = group_number
         self.grades = grades
+
+    def __add__(self, second_group: 'StudentGroup') -> int:
+        return sum(self.grades) + sum(second_group.grades)
 
 
 if __name__ == '__main__':
